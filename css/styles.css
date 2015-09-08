@@ -1,0 +1,187 @@
+/* ============================== */
+/* ! Layout for desktop version   */
+/* ============================== */
+
+	body {
+		font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	}
+	
+	h1 {
+		margin: 10px 0;
+		font-family: 'Oxygen', sans-serif;
+		font-size: 1.5em;
+		font-weight: normal;
+	}
+	
+	.logo {
+		margin: 10px 0;
+		font-family: 'Oxygen', sans-serif;
+		font-size: 1.5em;
+		font-weight: normal;
+	}
+	
+	input {
+		font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+		font-size: 1.2em;
+		background-color: #A9DADA;
+	}
+	
+	.new-list {
+		background-color: #A9DADA;
+	    cursor: pointer;
+	    height: 40px;
+	    line-height: 40px;
+	    margin: 0 0 0 15px;
+	    text-align: center;
+	    width: 150px;
+	}
+	
+	#day-bar {
+		background-color: #e4e4e4; 
+		padding: 5px;
+		font-family: "Reenie beanie", cursive;
+		font-size: 30px;
+		line-height: 40px;
+		height: 40px;
+	}
+	
+	#day-bar a {
+		margin: 0px 10px 0 0;
+		width: 50px;
+		display: block;
+		float: left;
+		text-align: center;
+		text-decoration: none;
+		background-color: white;
+		color: #000;
+		height: 40px;
+	}
+	
+	#day-bar a.last {
+		margin-right: 0;
+	}
+	
+	#day-bar a:hover {
+		text-decoration: none;
+	}
+	
+	#day-bar a:active {
+		background-color: #A9DADA; 
+	}
+	
+	#day-bar a:visited {
+		
+	}
+	
+	#day-bar .selected {
+		background-color: #6298B2;
+		color: white;
+		border: dashed 1px black;
+	}
+	
+	#super-link {
+		background-image: url(../images/sprites.png);
+		background-position: -27px -33px;
+		background-repeat: no-repeat;
+	}
+	
+	#link-image {
+		margin: 5px 0 0 0;
+	}
+	
+	.task {
+		border-bottom: solid 1px;
+		background-color: #6298B2;
+		color: white;
+		font-size: 1.25em;
+		height: 40px;
+		line-height: 40px;
+		cursor: pointer;
+	}
+	
+	.task-name {
+		margin: 0 0 0 4px;
+		float: left;
+	}
+	
+	.task-complete {
+		opacity: 0.45;
+	}
+	
+	.task-complete .task-name {
+		text-decoration: line-through;
+	}
+	
+	.task-complete label {
+		text-decoration: line-through;
+	}
+	
+	.taskToDay-delete-button {
+		background-image: url(../images/sprites.png);
+		background-position: -40px -112px;
+		background-repeat: no-repeat;
+		float: right;
+		width: 40px;
+		height: 40px;
+	}
+	
+	.empty-task {
+		border-top: solid 1px #000;
+		border-bottom: solid 1px #000;
+		width: 300px;
+		font-style: italic;
+		color: #111;
+		cursor: pointer;
+		margin: 10px;
+		text-align: center;
+		display: none;
+	}
+	
+	.new-task {
+		background-color: #A9DADA;	
+		line-height: 40px;
+		border: dashed 1px black;
+	}
+	
+	.new-task-box {
+		border: none;			
+		width: 560px;
+		margin: 0 0 0 4px;
+	}
+	
+	.task-hover {
+		background-color: 
+	}
+
+	input:focus {
+		outline: none;
+	}
+
+/* ============================= */
+/* ! Layout for mobile version   */
+/* ============================= */
+
+@media handheld, only screen and (max-width: 767px) {
+
+	body {
+		
+	}
+
+	.new-task-box {		
+		width: 280px;
+	}
+}
+
+
+/* ========================================== */
+/* ! Provide higher res assets for iPhone 4   */
+/* ========================================== */
+
+@media only screen and (-webkit-min-device-pixel-ratio: 2) { 
+
+/*	.logo {
+		background: url(logo2x.jpg) no-repeat;
+		background-size: 212px 303px;
+	}*/
+
+}

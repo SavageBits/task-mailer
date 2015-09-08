@@ -1,0 +1,43 @@
+<!doctype html>
+<html ng-app="todoApp">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <script src="js/angular.min.js"></script>
+    <script src="js/todo.js"></script>
+    <script src='https://cdn.firebase.com/js/client/2.2.1/firebase.js'></script>
+    <script src="https://cdn.firebase.com/libs/angularfire/1.1.2/angularfire.min.js"></script>
+
+    <link rel="stylesheet" href="css/todo.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/bootstrap-theme.min.css">
+</head>
+<body>
+<div class="container">
+    <div class="jumbotron">
+        <h1>GTD</h1>
+    </div>
+    <div ng-controller="TodoListController as todoList">
+        <span>{{todoList.remaining()}} of {{todoList.todos.length}} remaining</span>
+        [ <a href="" ng-click="todoList.archive()">archive</a> ]
+        <ul class="unstyled">
+            <li ng-repeat="todo in todoList.todos">
+                <input type="checkbox" ng-model="todo.done">
+                <span class="done-{{todo.done}}">{{todo.date}}: {{todo.text}}</span>
+            </li>
+        </ul>
+        <form ng-submit="todoList.addTodo()">
+            <input type="text" ng-model="todoList.todoText"  size="30"
+                   placeholder="add new todo here">
+            <input ng-model="todoList.date" type="date">
+            <input class="btn-primary" type="submit" value="add">
+        </form>
+    </div>
+</div>
+<script src="js/jquery-1.11.3.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8" />
+	<title>Daily Checklist</title>
+
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	
+	<!-- 1140px Grid styles for IE -->
+	<!--[if lte IE 9]><link rel="stylesheet" href="css/ie.css" type="text/css" media="screen" /><![endif]-->
+
+	<!-- The 1140px Grid - http://cssgrid.net/ -->
+	<link rel="stylesheet" href="css/1140.css" type="text/css" media="screen" />
+	
+	<!-- Your styles -->
+	<link rel="stylesheet" href="css/styles.css" type="text/css" media="screen" />
+	
+	<!--css3-mediaqueries-js - http://code.google.com/p/css3-mediaqueries-js/ - Enables media queries in some unsupported browsers-->
+	<script type="text/javascript" src="js/css3-mediaqueries.js"></script>
+	<script type="text/javascript" src="js/jquery-1.7.1.min.js"></script>
+	
+	<script type="text/javascript">
+		var task = {
+	    	insert: function(taskName){
+	    		$.ajax({
+	    			url: "ajax/insertTask.php",
+	    			type: "POST",
+	    			data: {_taskName: taskName, _checklistId: "1"},
+	    			success: function (result) {
+                        //alert(result);
+                    }
+	    		});
+	    	},
+	    	init: function(){
+	    		
+	    	}
+	    };
+	    
+	    var currentTaskId = 1;
+	    
+	    $(document).ready(function() {
+	    	$('.empty-task').click(function() {
+	    		
+	    		//$(this).replaceWith("<div class='new-task'><input id='new-task' type='text'></div>");
+	    		$(this).toggle();	    		
+	    		$('.new-task').toggle();
+	    		$('.new-task-box').focus();
+	    		
+	    		//$(this).removeClass("empty-task").addClass("enter-task");
+	    	})
+	    	
+	    	$('.new-task').click(function() {	    		    		
+	    		$('.new-task-box').focus();	    			    		
+	    	});
+	   
+	   		$('.task').bind("mouseover mouseout",function() {
+	   			$(this).toggleClass("task-hover");
+	   		})
+	   		.bind("click", function() {
+	   			//$(this).children("input:checkbox").trigger("click");
+	   			//$(this).children('.task-checkbox').trigger("click");			
+	   		});
+	    	
+	    	$('.new-task-box').keydown(function(event) {
+	    		if (event.which == 13) {
+	    			//alert();
+	    			//$(".new-task").children('.new-task-checkbox').attr("type")
+	    			
+	    			var newTaskId = task.insert($(this).val());
+	    			
+	    			var checkBoxId = "task" + newTaskId;	    			
+	    			
+	    			$(".new-task").before("<div class='task'>"
+						+ "<input id='" + checkBoxId + "' type='checkbox'>"
+						+ "<label for='" + checkBoxId + "'>" + $(this).val() + "</label>"
+					+ "</div>");
+										
+					
+					/*
+.bind("mouseover mouseout",function() {
+	   					$(this).toggleClass("task-hover");
+	   				});
+*/
+	    			
+	    			$(this).val("").focus();
+	    			
+	    			
+	    			/*
+$(".new-task-checkbox").replaceWith("<input id='" + checkBoxId + "' type='checkbox'>")
+	    			$(this).replaceWith("<label for='" + checkBoxId + "'>" + $(this).val() + "</label>");
+*/
+	    			
+	    			
+	    		}
+	    	});
+	    });
+	</script>
+</head>
+
+
+<body>
+
+<div class="container">
+	<div class="row">
+		<div class="twelvecol last">
+			<h1>Daily Checklist</h1>
+		</div>
+	</div>
+</div>
+
+<div class="container">
+	<div class="row">
+		<div class="twelvecol last">
+			<div id="day-bar">
+				10 11 12 13 14 15 16 17 yesterday today
+			</div>
+		</div>		
+	</div>
+</div>
+
+<div class="container">
+	<div class="row">
+		<div class="ninecol">
+		
+		
+			<div class="task">
+				<input id="task123" class="task-checkbox" type="checkbox"><label for="task123">Read news</label>
+			</div>
+			<div class="task">
+				<input id="task124" class="task-checkbox" type="checkbox"><label for="task124">Gratitude practice</label>
+			</div>			
+			
+			
+			<div class="empty-task">
+				Click me to create a task
+			</div>
+			
+			<div class="new-task">
+				<input class="new-task-checkbox" type="checkbox">
+				<input class='new-task-box' type='text'>
+			</div>
+		</div>
+		<div class="threecol last">
+			
+		</div>
+	</div>
+</div>
+
+</body>
+
+</html>
