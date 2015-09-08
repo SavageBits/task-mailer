@@ -6,7 +6,6 @@ var currentDateString = currentDate.getDay() + '' + currentDate.getMonth() + '' 
 
 var tasksToEmail = '';
 
-//TODO: order by date
 myDataRef.once('value', function(task) {
     task.forEach(function(data) {
         var taskDate = new Date(data.val().date);

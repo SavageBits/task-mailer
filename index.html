@@ -20,6 +20,12 @@
         <h1>GTD</h1>
     </div>
     <div ng-controller="TodoListController as todoList">
+        <form ng-submit="todoList.addTodo()">
+            <input type="text" ng-model="todoList.todoText"  size="30"
+                   placeholder="add new todo here">
+            <input ng-model="todoList.date" type="date">
+            <input class="btn-primary" type="submit" value="add">
+        </form>
         <span>{{todoList.remaining()}} of {{todoList.todos.length}} remaining</span>
         [ <a href="" ng-click="todoList.archive()">archive</a> ]
         <ul class="unstyled">
@@ -28,12 +34,6 @@
                 <span class="done-{{todo.done}}">{{todo.date}}: {{todo.text}}</span>
             </li>
         </ul>
-        <form ng-submit="todoList.addTodo()">
-            <input type="text" ng-model="todoList.todoText"  size="30"
-                   placeholder="add new todo here">
-            <input ng-model="todoList.date" type="date">
-            <input class="btn-primary" type="submit" value="add">
-        </form>
     </div>
 </div>
 <script src="js/jquery-1.11.3.min.js"></script>

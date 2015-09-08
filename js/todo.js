@@ -5,7 +5,6 @@ angular.module('todoApp', ["firebase"])
 
         todoList.todos = [];
 
-        //TODO: order by date
         myDataRef.orderByChild("date").on("child_added", function(task) {
             //can we bind directly to the control from firebase
             // without this intermediate object? i think so
