@@ -1,20 +1,28 @@
+//TODO: check off items to remove from list
+//TODO: add "done" field to db and update as apprope
+
 angular.module('todoApp', ["firebase"])
     .controller('TodoListController', function($scope, $firebaseObject) {
         var todoList = this;
-        var myDataRef = new Firebase('https://shining-inferno-6516.firebaseio.com/tasks');
+        var fbConnectionString = 'https://shining-inferno-6516.firebaseio.com/';
+        var myDataRef = new Firebase(fbConnectionString + 'tasks');
 
         todoList.todos = [];
+        todoList.selectedTasks = [];
 
         myDataRef.orderByChild("date").on("child_added", function(task) {
             //can we bind directly to the control from firebase
             // without this intermediate object? i think so
 
+            //alert(task.key());
+
             var taskDate = new Date(task.val().date)
 
             todoList.todos.push({
+                key: task.key(),
                 text: task.val().description,
                 date: taskDate.toDateString(),
-                done: false
+                done: task.val().done
             });
         });
 
@@ -27,7 +35,7 @@ angular.module('todoApp', ["firebase"])
         $scope.data = $firebaseObject(myDataRef);
 
         todoList.addTodo = function() {
-            myDataRef.push({description:todoList.todoText, date:todoList.date.getTime()});
+            myDataRef.push({description:todoList.todoText, date:todoList.date.getTime(), done:false});
 
             //thanks to binding between angular and firebase, we don't need to
             // explicitly add new items to the list. anything pushed to firebase
@@ -35,6 +43,12 @@ angular.module('todoApp', ["firebase"])
             //todoList.todos.push({text:todoList.todoText, done:false});
 
             todoList.todoText = '';
+        };
+
+        todoList.selectTask = function(key, done) {
+            //todoList.selectedTasks.push(key);
+            var taskRef = new Firebase(fbConnectionString + 'tasks/' + key);
+            taskRef.child('done').set(done);
         };
 
         todoList.remaining = function() {

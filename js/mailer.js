@@ -2,7 +2,7 @@ var Firebase = require('firebase');
 var myDataRef = new Firebase('https://shining-inferno-6516.firebaseio.com/tasks');
 
 var currentDate = new Date();
-var currentDateString = currentDate.getDay() + '' + currentDate.getMonth() + '' + currentDate.getFullYear();
+var currentDateString = currentDate.getDate() + '' + currentDate.getMonth() + '' + currentDate.getFullYear();
 
 var tasksToEmail = '';
 
@@ -10,10 +10,12 @@ myDataRef.once('value', function(task) {
     task.forEach(function(data) {
         var taskDate = new Date(data.val().date);
 
-        var taskDateString = taskDate.getDay() + '' + taskDate.getMonth() + '' + taskDate.getFullYear();
+        var taskDateString = taskDate.getDate() + '' + taskDate.getMonth() + '' + taskDate.getFullYear();
 
-        if (currentDateString == taskDateString)
+        if (currentDateString == taskDateString) {
+            //console.log(currentDateString + ' : ' + taskDateString);
             tasksToEmail += data.val().description + '<br/>';
+        }
     });
 
     if (tasksToEmail.length > 0) {
