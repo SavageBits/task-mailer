@@ -1,5 +1,4 @@
-//TODO: check off items to remove from list
-//TODO: add "done" field to db and update as apprope
+//todo: add checkbox to always recur on same day of the week ("every tues do this")
 
 angular.module('todoApp', ["firebase"])
     .controller('TodoListController', function($scope, $firebaseObject) {
@@ -10,7 +9,8 @@ angular.module('todoApp', ["firebase"])
         todoList.todos = [];
         todoList.selectedTasks = [];
 
-        myDataRef.orderByChild("date").on("child_added", function(task) {
+        //myDataRef.orderByChild("done").equalTo(false).orderByChild("date").on("child_added", function(task) {
+        myDataRef.orderByChild("done").equalTo(false).on("child_added", function(task) {
             //can we bind directly to the control from firebase
             // without this intermediate object? i think so
 
