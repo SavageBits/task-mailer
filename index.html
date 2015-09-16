@@ -13,20 +13,51 @@
     <link rel="stylesheet" href="css/todo.css">
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="css/jquery.mobile.custom.structure.min.css">
 </head>
 <body>
+<!--<nav class="navbar">-->
+    <!--<div class="container">-->
+        <!--<div class="navbar-header">-->
+            <!--SB-->
+        <!--</div>-->
+    <!--</div>-->
+<!--</nav>-->
+<!--<div data-role="tabs" id="tabs">-->
+    <!--  <div data-role="navbar">-->
+    <!--    <ul>-->
+    <!--      <li><a href="#list" data-ajax="false">list</a></li>-->
+    <!--      <li><a href="#add" data-ajax="false">add</a></li>-->
+    <!--    </ul>-->
+    <!--  </div>-->
+    <!--  <div id="list" class="ui-body-d ui-content">-->
+    <!--    list-->
+    <!--  </div>-->
+    <!--  <div id="add">-->
+        <!--add-->
+    <!--  </div>-->
+<!--</div>-->
 <div class="container">
-    <div class="jumbotron">
-        <h1>GTD</h1>
-    </div>
     <div ng-controller="TodoListController as todoList">
-        <form ng-submit="todoList.addTodo()">
-            <input type="text" ng-model="todoList.todoText"  size="30"
-                   placeholder="add new todo here">
-            <input type="date" ng-model="todoList.date">
-            <input class="btn btn-primary btn-sm" type="submit" value="add">
-        </form>
-        [ <a href="" ng-click="todoList.archive()">archive</a> ]
+
+        <div class="panel panel-info">
+            <div class="panel-body">
+                <form ng-submit="todoList.addTodo()">
+                    <div class="form-group">
+                        <label for="inputTodoText">what</label>
+                        <input class="form-control" id="inputTodoText" type="text" ng-model="todoList.todoText"  size="30"
+                               placeholder="add new todo here">
+                    </div>
+                    <div class="form-group">
+                        <label for="inputTodoDate">when</label>
+                        <input class="form-control" id="inputTodoDate" type="date" ng-model="todoList.date">
+                    </div>
+                    <input class="btn btn-primary btn-sm" type="submit" value="add">
+                </form>
+            </div>
+        </div>
+
+        <!--[ <a href="" ng-click="todoList.archive()">archive</a> ]-->
         <div class="panel panel-primary">
             <div class="panel-heading">
                 today <span class="badge">{{todoList.todayTodos.length}}</span> <button type="button" class="btn btn-default btn-xs">refresh</button>
@@ -37,7 +68,7 @@
                         <input ng-click="todoList.selectTask(todo.key, todo.done)" type="checkbox" ng-model="todo.done">
                     </div>
                     <div class="done-{{todo.done}}">
-                        {{todo.date}}: {{todo.text}}
+                        {{todo.text}}
                     </div>
                 </li>
             </ul>
@@ -48,8 +79,10 @@
             </div>
             <ul class="list-group">
                 <li class="list-group-item" ng-repeat="todo in todoList.anytimeTodos">
-                    <input ng-click="todoList.selectTask(todo.key, todo.done)" type="checkbox" ng-model="todo.done">
-                    <span class="done-{{todo.done}}">{{todo.date}}: {{todo.text}}</span>
+                    <div class="task-checkbox">
+                        <input ng-click="todoList.selectTask(todo.key, todo.done)" type="checkbox" ng-model="todo.done">
+                    </div>
+                    <span class="done-{{todo.done}}">{{todo.text}}</span>
                 </li>
             </ul>
         </div>
@@ -68,8 +101,15 @@
         </div>
     </div>
 </div>
+
 <script src="js/jquery-1.11.3.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
+<script src="js/jquery.mobile.custom.min.js"></script>
 
+<script type="text/javascript">
+$( document ).ready(function() {
+   $( "#inputTodoText" ).focus();
+});
+</script>
 </body>
 </html>
