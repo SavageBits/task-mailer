@@ -24,48 +24,47 @@
             <input type="text" ng-model="todoList.todoText"  size="30"
                    placeholder="add new todo here">
             <input type="date" ng-model="todoList.date">
-            <input class="btn-primary" type="submit" value="add">
+            <input class="btn btn-primary btn-sm" type="submit" value="add">
         </form>
-        <span>{{todoList.remaining()}} of {{todoList.todos.length}} remaining</span>
         [ <a href="" ng-click="todoList.archive()">archive</a> ]
         <div class="panel panel-primary">
             <div class="panel-heading">
-                today <span class="badge">{{todoList.todayTodos.length}}</span>
+                today <span class="badge">{{todoList.todayTodos.length}}</span> <button type="button" class="btn btn-default btn-xs">refresh</button>
             </div>
-            <div class="panel-body">
-                <ul class="unstyled">
-                    <li ng-repeat="todo in todoList.todayTodos">
+            <ul class="list-group">
+                <li class="list-group-item" ng-repeat="todo in todoList.todayTodos">
+                    <div class="task-checkbox">
                         <input ng-click="todoList.selectTask(todo.key, todo.done)" type="checkbox" ng-model="todo.done">
-                        <span class="done-{{todo.done}}">{{todo.date}}: {{todo.text}}</span>
-                    </li>
-                </ul>
-            </div>
+                    </div>
+                    <div class="done-{{todo.done}}">
+                        {{todo.date}}: {{todo.text}}
+                    </div>
+                </li>
+            </ul>
         </div>
-        <div class="panel panel-default">
+        <div class="panel panel-info">
             <div class="panel-heading">
-                anytime <span class="badge">{{todoList.anytimeTodos.length}}</span>
+                anytime <span class="badge">{{todoList.anytimeTodos.length}}</span> <button type="button" class="btn btn-primary btn-xs">refresh</button>
             </div>
-            <div class="panel-body">
-                <ul class="unstyled">
-                    <li ng-repeat="todo in todoList.anytimeTodos">
-                        <input ng-click="todoList.selectTask(todo.key, todo.done)" type="checkbox" ng-model="todo.done">
-                        <span class="done-{{todo.done}}">{{todo.date}}: {{todo.text}}</span>
-                    </li>
-                </ul>
-            </div>
+            <ul class="list-group">
+                <li class="list-group-item" ng-repeat="todo in todoList.anytimeTodos">
+                    <input ng-click="todoList.selectTask(todo.key, todo.done)" type="checkbox" ng-model="todo.done">
+                    <span class="done-{{todo.done}}">{{todo.date}}: {{todo.text}}</span>
+                </li>
+            </ul>
         </div>
-        <div class="panel panel-default">
+        <div class="panel panel-info">
             <div class="panel-heading">
-                future <span class="badge">{{todoList.todos.length}}</span>
+                future <span class="badge">{{todoList.todos.length}}</span> <button type="button" class="btn btn-primary btn-xs">refresh</button>
             </div>
-            <div class="panel-body">
-                <ul class="unstyled">
-                    <li ng-repeat="todo in todoList.todos">
+            <ul class="list-group">
+                <li class="list-group-item" ng-repeat="todo in todoList.todos">
+                    <div class="task-checkbox">
                         <input ng-click="todoList.selectTask(todo.key, todo.done)" type="checkbox" ng-model="todo.done">
-                        <span class="done-{{todo.done}}">{{todo.date}}: {{todo.text}}</span>
-                    </li>
-                </ul>
-            </div>
+                    </div>
+                    <span class="done-{{todo.done}}">{{todo.date}}: {{todo.text}}</span>
+                </li>
+            </ul>
         </div>
     </div>
 </div>

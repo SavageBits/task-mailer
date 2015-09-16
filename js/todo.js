@@ -1,7 +1,9 @@
 //todo: add checkbox to always recur on same day of the week ("every tues do this")
 //todo: optimize design for mobile
 //todo: add archive button for each group of tasks
-//todo: make full task description clickable and fire checkbox checked event
+//todo: make full task description clickable and fire checkbox checked event (deferring this since accidentally
+// touching a task when trying to scroll would mark it as done and remove it from the list on reload. might be better
+// UX to just force the user to click on the checkbox)
 //todo: group future tasks by date
 //todo: some tasks in "future" group are actually past since "today" group only looks to see if the task happens today
 angular.module('todoApp', ["firebase"])
