@@ -28,12 +28,45 @@
         </form>
         <span>{{todoList.remaining()}} of {{todoList.todos.length}} remaining</span>
         [ <a href="" ng-click="todoList.archive()">archive</a> ]
-        <ul class="unstyled">
-            <li ng-repeat="todo in todoList.todos">
-                <input ng-click="todoList.selectTask(todo.key, todo.done)" type="checkbox" ng-model="todo.done">
-                <span class="done-{{todo.done}}">{{todo.date}}: {{todo.text}}</span>
-            </li>
-        </ul>
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                today <span class="badge">{{todoList.todayTodos.length}}</span>
+            </div>
+            <div class="panel-body">
+                <ul class="unstyled">
+                    <li ng-repeat="todo in todoList.todayTodos">
+                        <input ng-click="todoList.selectTask(todo.key, todo.done)" type="checkbox" ng-model="todo.done">
+                        <span class="done-{{todo.done}}">{{todo.date}}: {{todo.text}}</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                anytime <span class="badge">{{todoList.anytimeTodos.length}}</span>
+            </div>
+            <div class="panel-body">
+                <ul class="unstyled">
+                    <li ng-repeat="todo in todoList.anytimeTodos">
+                        <input ng-click="todoList.selectTask(todo.key, todo.done)" type="checkbox" ng-model="todo.done">
+                        <span class="done-{{todo.done}}">{{todo.date}}: {{todo.text}}</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                future <span class="badge">{{todoList.todos.length}}</span>
+            </div>
+            <div class="panel-body">
+                <ul class="unstyled">
+                    <li ng-repeat="todo in todoList.todos">
+                        <input ng-click="todoList.selectTask(todo.key, todo.done)" type="checkbox" ng-model="todo.done">
+                        <span class="done-{{todo.done}}">{{todo.date}}: {{todo.text}}</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
     </div>
 </div>
 <script src="js/jquery-1.11.3.min.js"></script>

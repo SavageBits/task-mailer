@@ -6,15 +6,17 @@ var currentDateString = currentDate.getDate() + '' + currentDate.getMonth() + ''
 
 var tasksToEmail = '';
 
-myDataRef.once('value', function(task) {
+myDataRef.orderByChild("done").equalTo(false).once('value', function(task) {
     task.forEach(function(data) {
-        var taskDate = new Date(data.val().date);
+        if (typeof data.val().date != 'undefined') {
+            var taskDate = new Date(data.val().date);
 
-        var taskDateString = taskDate.getDate() + '' + taskDate.getMonth() + '' + taskDate.getFullYear();
+            var taskDateString = taskDate.getDate() + '' + taskDate.getMonth() + '' + taskDate.getFullYear();
 
-        if (currentDateString == taskDateString) {
-            //console.log(currentDateString + ' : ' + taskDateString);
-            tasksToEmail += data.val().description + '<br/>';
+            if (currentDateString == taskDateString) {
+                //console.log(currentDateString + ' : ' + taskDateString);
+                tasksToEmail += data.val().description + '<br/>';
+            }
         }
     });
 

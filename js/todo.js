@@ -1,29 +1,67 @@
 //todo: add checkbox to always recur on same day of the week ("every tues do this")
-
+//todo: optimize design for mobile
+//todo: add archive button for each group of tasks
+//todo: make full task description clickable and fire checkbox checked event
+//todo: group future tasks by date
+//todo: some tasks in "future" group are actually past since "today" group only looks to see if the task happens today
 angular.module('todoApp', ["firebase"])
     .controller('TodoListController', function($scope, $firebaseObject) {
         var todoList = this;
         var fbConnectionString = 'https://shining-inferno-6516.firebaseio.com/';
         var myDataRef = new Firebase(fbConnectionString + 'tasks');
 
+        var currentDate = new Date();
+        var currentDateString = currentDate.getDate() + '' + currentDate.getMonth() + '' + currentDate.getFullYear();
+
         todoList.todos = [];
+        todoList.todayTodos = [];
+        todoList.anytimeTodos = [];
         todoList.selectedTasks = [];
 
-        //myDataRef.orderByChild("done").equalTo(false).orderByChild("date").on("child_added", function(task) {
+        //myDataRef.orderByChild("date").on("child_added", function(task) {
         myDataRef.orderByChild("done").equalTo(false).on("child_added", function(task) {
             //can we bind directly to the control from firebase
             // without this intermediate object? i think so
 
-            //alert(task.key());
+            //alert(task.val().date);
+            var taskDate;
+            var taskDateString = '';
 
-            var taskDate = new Date(task.val().date)
+            if (typeof task.val().date != 'undefined')
+            {
+                taskDate = new Date(task.val().date);
+                taskDateString = taskDate.getDate() + '' + taskDate.getMonth() + '' + taskDate.getFullYear();
+            }
+            else
+                taskDate = '[any]';
 
-            todoList.todos.push({
-                key: task.key(),
-                text: task.val().description,
-                date: taskDate.toDateString(),
-                done: task.val().done
-            });
+
+            if (taskDateString.length > 0) {
+                if (currentDateString == taskDateString)
+                    todoList.todayTodos.push({
+                        key: task.key(),
+                        text: task.val().description,
+                        date: taskDate.toDateString(),
+                        done: task.val().done
+                    });
+                else
+                    todoList.todos.push({
+                        key: task.key(),
+                        text: task.val().description,
+                        date: taskDate.toDateString(),
+                        done: task.val().done
+                    });
+            }
+            else
+            {
+                todoList.anytimeTodos.push({
+                    key: task.key(),
+                    text: task.val().description,
+                    date: taskDate,
+                    done: task.val().done
+                });
+            }
+
         });
 
         //add the line below into the html to see the data in scope
@@ -35,7 +73,9 @@ angular.module('todoApp', ["firebase"])
         $scope.data = $firebaseObject(myDataRef);
 
         todoList.addTodo = function() {
-            myDataRef.push({description:todoList.todoText, date:todoList.date.getTime(), done:false});
+            var taskDateToAdd = todoList.date == null ? null : todoList.date.getTime();
+
+            myDataRef.push({description:todoList.todoText, date:taskDateToAdd, done:false});
 
             //thanks to binding between angular and firebase, we don't need to
             // explicitly add new items to the list. anything pushed to firebase
