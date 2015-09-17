@@ -75,10 +75,6 @@ angular.module('todoApp', ["firebase"])
         $scope.data = $firebaseObject(myDataRef);
 
         todoList.addTodo = function() {
-            var currentDate = new Date();
-
-            alert(currentDate.getTime() + ' : ' + todoList.date.getTime());
-
             if (todoList.todoText.length > 0) {
                 var taskDateToAdd = todoList.date == null ? null : todoList.date.getTime();
 
