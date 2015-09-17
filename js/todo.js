@@ -75,16 +75,22 @@ angular.module('todoApp', ["firebase"])
         $scope.data = $firebaseObject(myDataRef);
 
         todoList.addTodo = function() {
-            var taskDateToAdd = todoList.date == null ? null : todoList.date.getTime();
+            var currentDate = new Date();
 
-            myDataRef.push({description:todoList.todoText, date:taskDateToAdd, done:false});
+            alert(currentDate.getTime() + ' : ' + todoList.date.getTime());
 
-            //thanks to binding between angular and firebase, we don't need to
-            // explicitly add new items to the list. anything pushed to firebase
-            // will automagically show up in our list
-            //todoList.todos.push({text:todoList.todoText, done:false});
+            if (todoList.todoText.length > 0) {
+                var taskDateToAdd = todoList.date == null ? null : todoList.date.getTime();
 
-            todoList.todoText = '';
+                myDataRef.push({description:todoList.todoText, date:taskDateToAdd, done:false});
+
+                //thanks to binding between angular and firebase, we don't need to
+                // explicitly add new items to the list. anything pushed to firebase
+                // will automagically show up in our list
+                //todoList.todos.push({text:todoList.todoText, done:false});
+
+                todoList.todoText = '';
+            }
         };
 
         todoList.selectTask = function(key, done) {
