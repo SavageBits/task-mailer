@@ -3,12 +3,17 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimal-ui" />
+
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+
+    <link rel="apple-touch-icon" href="images/logo_48x48.png">
 
     <script src="js/angular.min.js"></script>
     <script src="js/todo.js"></script>
-    <script src='https://cdn.firebase.com/js/client/2.2.1/firebase.js'></script>
-    <script src="https://cdn.firebase.com/libs/angularfire/1.1.2/angularfire.min.js"></script>
+    <script src='js/firebase.js'></script>
+    <script src="js/angularfire.min.js"></script>
 
     <link rel="stylesheet" href="css/todo.css">
     <link rel="stylesheet" href="css/bootstrap.min.css">
@@ -39,7 +44,6 @@
 <!--</div>-->
 <div class="container">
     <div ng-controller="TodoListController as todoList">
-
         <div class="panel panel-info">
             <div class="panel-body">
                 <form ng-submit="todoList.addTodo()">
@@ -58,9 +62,10 @@
         </div>
 
         <!--[ <a href="" ng-click="todoList.archive()">archive</a> ]-->
-        <div class="panel panel-primary">
+
+        <div class="panel panel-success">
             <div class="panel-heading">
-                today <span class="badge">{{todoList.todayTodos.length}}</span> <button type="button" class="btn btn-default btn-xs">refresh</button>
+                today <span class="badge">{{todoList.todayTodos.length}}</span> <button ng-click="todoList.archive(todoList.todayTodos)" type="button" class="btn btn-default btn-xs">refresh</button>
             </div>
             <ul class="list-group">
                 <li class="list-group-item" ng-repeat="todo in todoList.todayTodos">
@@ -73,6 +78,23 @@
                 </li>
             </ul>
         </div>
+
+        <div class="panel panel-warning">
+            <div class="panel-heading">
+                overdue <span class="badge">{{todoList.overdueTodos.length}}</span> <button ng-click="todoList.archive(todoList.overdueTodos)" type="button" class="btn btn-default btn-xs">refresh</button>
+            </div>
+            <ul class="list-group">
+                <li class="list-group-item" ng-repeat="todo in todoList.overdueTodos">
+                    <div class="task-checkbox">
+                        <input ng-click="todoList.selectTask(todo.key, todo.done)" type="checkbox" ng-model="todo.done">
+                    </div>
+                    <div class="done-{{todo.done}}">
+                        {{todo.text}}
+                    </div>
+                </li>
+            </ul>
+        </div>
+
         <div class="panel panel-info">
             <div class="panel-heading">
                 anytime <span class="badge">{{todoList.anytimeTodos.length}}</span> <button type="button" class="btn btn-primary btn-xs">refresh</button>
@@ -86,9 +108,10 @@
                 </li>
             </ul>
         </div>
+
         <div class="panel panel-info">
             <div class="panel-heading">
-                future <span class="badge">{{todoList.todos.length}}</span> <button type="button" class="btn btn-primary btn-xs">refresh</button>
+                future <span class="badge">{{todoList.todos.length}}</span> <button id="btn-refresh-future" ng-click="todoList.archive(todoList.todos)" type="button" class="btn btn-primary btn-xs">refresh</button>
             </div>
             <ul class="list-group">
                 <li class="list-group-item" ng-repeat="todo in todoList.todos">

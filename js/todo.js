@@ -1,11 +1,10 @@
 //todo: add checkbox to always recur on same day of the week ("every tues do this")
-//todo: optimize design for mobile
 //todo: add archive button for each group of tasks
 //todo: make full task description clickable and fire checkbox checked event (deferring this since accidentally
 // touching a task when trying to scroll would mark it as done and remove it from the list on reload. might be better
 // UX to just force the user to click on the checkbox)
 //todo: group future tasks by date
-//todo: some tasks in "future" group are actually past since "today" group only looks to see if the task happens today
+//todo: ability to send text
 angular.module('todoApp', ["firebase"])
     .controller('TodoListController', function($scope, $firebaseObject) {
         var todoList = this;
@@ -18,6 +17,8 @@ angular.module('todoApp', ["firebase"])
         todoList.todos = [];
         todoList.todayTodos = [];
         todoList.anytimeTodos = [];
+        todoList.overdueTodos = [];
+
         todoList.selectedTasks = [];
 
         //myDataRef.orderByChild("date").on("child_added", function(task) {
@@ -41,6 +42,13 @@ angular.module('todoApp', ["firebase"])
             if (taskDateString.length > 0) {
                 if (currentDateString == taskDateString)
                     todoList.todayTodos.push({
+                        key: task.key(),
+                        text: task.val().description,
+                        date: taskDate.toDateString(),
+                        done: task.val().done
+                    });
+                else if (currentDate > taskDate)
+                    todoList.overdueTodos.push({
                         key: task.key(),
                         text: task.val().description,
                         date: taskDate.toDateString(),
@@ -103,11 +111,15 @@ angular.module('todoApp', ["firebase"])
             return count;
         };
 
-        todoList.archive = function() {
-            var oldTodos = todoList.todos;
-            todoList.todos = [];
-            angular.forEach(oldTodos, function(todo) {
-                if (!todo.done) todoList.todos.push(todo);
-            });
+        todoList.archive = function(todoListToArchive) {
+            console.log(todoListToArchive);
+            //alert(args);
+
+            //var oldTodos = todoListToArchive;
+            //todoListToArchive = [];
+            //angular.forEach(oldTodos, function(todo) {
+            //    alert(todo.text);
+            //    if (!todo.done) todoListToArchive.push(todo);
+            //});
         };
     });
