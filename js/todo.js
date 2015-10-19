@@ -5,7 +5,14 @@
 // UX to just force the user to click on the checkbox)
 //todo: group future tasks by date
 //todo: ability to send text
+//todo: thin out the controller and move functions into a separate module
+//todo: add authentication for one user (me)
+//todo: add authentication and support for multiple users
 angular.module('todoApp', ["firebase"])
+    //.value('fbUrl', 'https://shining-inferno-6516.firebaseio.com/')
+    //.service('fbRef', function(fbUrl) {
+    //    return new Firebase(fbUrl)
+    //})
     .controller('TodoListController', function($scope, $firebaseObject) {
         var todoList = this;
         var fbConnectionString = 'https://shining-inferno-6516.firebaseio.com/';
