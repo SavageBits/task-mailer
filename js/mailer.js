@@ -1,8 +1,11 @@
+var sendEmail = true;
+
 var Firebase = require('firebase');
 var myDataRef = new Firebase('https://shining-inferno-6516.firebaseio.com/tasks');
 
 var currentDate = new Date();
 var currentDateString = currentDate.getDate() + '' + currentDate.getMonth() + '' + currentDate.getFullYear();
+
 
 var tasksToEmail = '';
 
@@ -13,14 +16,18 @@ myDataRef.orderByChild("done").equalTo(false).once('value', function(task) {
 
             var taskDateString = taskDate.getDate() + '' + taskDate.getMonth() + '' + taskDate.getFullYear();
 
+            //console.log(taskDate.toISOString() + ' for ' + data.val().description);
+
+            console.log(currentDateString + ' : ' + taskDateString + ' for ' + data.val().description);
+
             if (currentDateString == taskDateString) {
-                //console.log(currentDateString + ' : ' + taskDateString);
                 tasksToEmail += data.val().description + '<br/>';
             }
         }
     });
 
     if (tasksToEmail.length > 0) {
+        console.log('Found tasks to email.');
         //console.log(tasksToEmail);
         var nodemailer = require('nodemailer');
         var generator = require('xoauth2').createXOAuth2Generator({
@@ -46,14 +53,18 @@ myDataRef.orderByChild("done").equalTo(false).once('value', function(task) {
             html: tasksToEmail // html body
         };
 
-        transporter.sendMail(mailOptions, function (error, info) {
-            if (error) {
-                console.log(error);
-            } else {
-                console.log('Message sent: ' + info.response);
-            }
-        });
+        if (sendEmail)
+            transporter.sendMail(mailOptions, function (error, info) {
+                if (error) {
+                    console.log(error);
+                } else {
+                    console.log('Message sent: ' + info.response);
+                }
+            });
     }
 
-    setTimeout(function() { process.exit(0); }, 15000);
+    console.log('Mailer finished.');
+
+    //15 seconds might've been exiting the process before the email could be sent, so upped to 30
+    setTimeout(function() { process.exit(0); }, 30000);
 });

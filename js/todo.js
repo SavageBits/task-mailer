@@ -93,6 +93,11 @@ angular.module('todoApp', ["firebase"])
             if (todoList.todoText.length > 0) {
                 var taskDateToAdd = todoList.date == null ? null : todoList.date.getTime();
 
+                var isoDate = new Date(todoList.date.toISOString());
+
+                //console.log(taskDateToAdd);
+                //console.log(todoList.date.toISOString());
+
                 myDataRef.push({description:todoList.todoText, date:taskDateToAdd, done:false});
 
                 //thanks to binding between angular and firebase, we don't need to
