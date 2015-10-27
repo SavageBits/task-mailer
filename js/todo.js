@@ -46,28 +46,22 @@ angular.module('todoApp', ["firebase"])
                 taskDate = '[any]';
 
 
+            var pushOntoTodoList = function(targetTodoList, task, taskDate) {
+                targetTodoList.push({
+                    key: task.key(),
+                    text: task.val().description,
+                    date: taskDate.toDateString(),
+                    done: task.val().done
+                });
+            };
+
             if (taskDateString.length > 0) {
                 if (currentDateString == taskDateString)
-                    todoList.todayTodos.push({
-                        key: task.key(),
-                        text: task.val().description,
-                        date: taskDate.toDateString(),
-                        done: task.val().done
-                    });
+                    pushOntoTodoList(todoList.todayTodos, task, taskDate);
                 else if (currentDate > taskDate)
-                    todoList.overdueTodos.push({
-                        key: task.key(),
-                        text: task.val().description,
-                        date: taskDate.toDateString(),
-                        done: task.val().done
-                    });
+                    pushOntoTodoList(todoList.overdueTodos, task, taskDate);
                 else
-                    todoList.todos.push({
-                        key: task.key(),
-                        text: task.val().description,
-                        date: taskDate.toDateString(),
-                        done: task.val().done
-                    });
+                    pushOntoTodoList(todoList.todos, task, taskDate)
             }
             else
             {
